@@ -24,7 +24,7 @@
   }
 </style> -->
 
-<script setup>
+<!-- <script setup>
   const blocks = [
     {
       id: 1,
@@ -66,4 +66,22 @@
       </template>
     </ul>
   </div>
+</template> -->
+
+<script setup>
+  const handleClick = (message) => {console.log(message)}
+
+</script>
+
+<template>
+  <h2>v-on??</h2>
+  <!-- params -->
+  <button v-on:click="handleClick('???')">ola</button>
+  <button @click="handleClick('!!!')">dog water</button>
+  <!-- click options -->
+  <button v-on:click.left="handleClick('left')">left button</button>
+  <button v-on:click.right="handleClick('right')">right button</button>
+  <button @click.middle="handleClick('middle')">middle button</button>
+  <!-- specific click options -->
+  <button @click.left.prevent="handleClick('prevent left')">left button</button>
 </template>
