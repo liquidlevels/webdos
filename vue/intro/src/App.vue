@@ -68,6 +68,7 @@
   </div>
 </template> -->
 
+<!--
 <script setup>
   const handleClick = (message) => {console.log(message)}
 
@@ -75,13 +76,46 @@
 
 <template>
   <h2>v-on??</h2>
-  <!-- params -->
+  params
   <button v-on:click="handleClick('???')">ola</button>
   <button @click="handleClick('!!!')">dog water</button>
-  <!-- click options -->
+  click options
   <button v-on:click.left="handleClick('left')">left button</button>
   <button v-on:click.right="handleClick('right')">right button</button>
   <button @click.middle="handleClick('middle')">middle button</button>
-  <!-- specific click options -->
+  specific click options
   <button @click.left.prevent="handleClick('prevent left')">left button</button>
 </template>
+-->
+
+<script setup>
+  import {ref, resolveDirective} from 'vue'
+  const num = ref(0)
+  const red = "color: red;"
+  const green = "color: green;"
+  const black = "color: black;"
+  const colors = ["red", "green", "black"]
+  const conter = () => {num.value++}
+  const deconter = () => {num.value--}
+  const reset = () => {num.value=0}
+</script>
+
+<template>
+  <button @click="conter">conter</button>
+  <button @click="deconter">deconter</button>
+  <button @click="reset">deconter</button>
+  <!-- <h2 v-if="num > 0" v-bind:style="green">{{ num }}</h2> -->
+  <!-- <h2 v-else-if="num < 0" v-bind:style="red">{{ num }}</h2> -->
+  <!-- <h2 v-else="num == 0" v-bind:style="black">{{ num }}</h2> -->
+  <h2 :class="num > 0 ? 'positive' : num < 0 ? 'negative' : 'black'">{{ num }}</h2>
+  <h2 :style="`color: ${ num > 0 ? colors[1] : num < 0 ? colors[0] : colors[2] }`">{{ num }}</h2>
+
+</template>
+
+<style>
+.black {color: black;}
+
+.positive {color: green;}
+
+.negative {color: red;}
+</style>
