@@ -88,7 +88,7 @@
 </template>
 -->
 
-<script setup>
+<!-- <script setup>
   import {ref, resolveDirective} from 'vue'
   const num = ref(0)
   const red = "color: red;"
@@ -104,9 +104,9 @@
   <button @click="conter">conter</button>
   <button @click="deconter">deconter</button>
   <button @click="reset">deconter</button>
-  <!-- <h2 v-if="num > 0" v-bind:style="green">{{ num }}</h2> -->
-  <!-- <h2 v-else-if="num < 0" v-bind:style="red">{{ num }}</h2> -->
-  <!-- <h2 v-else="num == 0" v-bind:style="black">{{ num }}</h2> -->
+  <h2 v-if="num > 0" v-bind:style="green">{{ num }}</h2>
+  <h2 v-else-if="num < 0" v-bind:style="red">{{ num }}</h2>
+  <h2 v-else="num == 0" v-bind:style="black">{{ num }}</h2>
   <h2 :class="num > 0 ? 'positive' : num < 0 ? 'negative' : 'black'">{{ num }}</h2>
   <h2 :style="`color: ${ num > 0 ? colors[1] : num < 0 ? colors[0] : colors[2] }`">{{ num }}</h2>
 
@@ -118,4 +118,35 @@
 .positive {color: green;}
 
 .negative {color: red;}
+</style> -->
+
+<script setup>
+import {computed, ref} from 'vue'
+
+
+const numbar = ref(0)
+const conter = () => {numbar.value++}
+const deconter = () => {numbar.value--}
+const reset = () => {numbar.value=0}
+
+const conterClass = computed(()=>{
+  if(numbar.value === 0) return 'ziro'
+  if(numbar.value > 0) return 'positip'
+  if(numbar.value < 0) return 'negatip'
+
+})
+
+</script>
+
+<template>
+  <h2 :class="conterClass"> {{ numbar }}</h2>
+  <button @click="conter">conter</button>
+  <button @click="deconter">deconter</button>
+  <button @click="reset">resetme</button>
+</template>
+
+<style>
+.ziro {color: black;}
+.positip {color: green;}
+.negatip {color: red;}
 </style>
