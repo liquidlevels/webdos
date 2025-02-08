@@ -120,7 +120,7 @@
 .negative {color: red;}
 </style> -->
 
-<script setup>
+<!-- <script setup>
 import {computed, ref} from 'vue'
 
 
@@ -149,4 +149,43 @@ const conterClass = computed(()=>{
 .ziro {color: black;}
 .positip {color: green;}
 .negatip {color: red;}
-</style>
+</style> -->
+
+<!-- excercise two -->
+<script setup>
+import { computed, ref } from 'vue'
+
+  const list = ref([])
+  const numbar = ref(0)
+  const conter = () => {numbar.value++}
+  const deconter = () => {numbar.value--}
+  const reset = () => {numbar.value=0}
+  
+  const addNumbar = () => {list.value.push(numbar.value)}
+
+  const noRepeatedNumbars = computed(()=>{
+    const found = list.value.find((num) => num === numbar.value)
+    if (found === 0) return true
+    return found ? true : false    
+  })
+</script>
+<template>
+  <h2> {{ numbar }}</h2>
+  <button @click="conter">conter</button>
+  <button @click="deconter">deconter</button>
+  <button @click="reset">resetme</button>
+  <button @click="addNumbar" :disabled="noRepeatedNumbars">add</button>
+  <div>
+    <h2>List of numbars</h2>
+    <ul style="color: purple;">
+      <template v-for="(num, index) in list">
+        <li>{{ num }}</li>
+      </template>
+    </ul>
+    <!-- another way to show the array -->
+    <ol>
+      <li v-for="(num) in list":key="num">{{ num }}</li>
+    </ol>
+  </div>
+</template>
+<style></style>
