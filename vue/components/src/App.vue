@@ -66,7 +66,11 @@ fetch("https://minecraft-api.vercel.app/api/items")
 .then((data) => {
   posts.value = data
 })
-.finally(() => loadingPage.value = false)
+.finally(() => {
+  setTimeout(() => {
+    loadingPage.value = false
+  }, 2000)
+})
 .catch((err) => console.error(err)); 
 
 </script>
