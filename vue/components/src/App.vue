@@ -6,6 +6,7 @@ import ConterButton from './components/ConterButton.vue';
 import { computed, ref } from 'vue';
 import MinecraftAPI from './components/MinecraftAPI.vue';
 import PaginacionPost from './components/PaginacionPost.vue';
+import Loading from './components/Loading.vue';
 
 // const posts = ref([
 //   { title: "Post netherite", id: 1, text: "Netherite is a material from the Nether, used primarily to upgrade diamond gear." },
@@ -65,6 +66,7 @@ fetch("https://minecraft-api.vercel.app/api/items")
 .then((data) => {
   posts.value = data
 })
+.finally(() => loadingPage.value = false)
 .catch((err) => console.error(err)); 
 
 </script>
@@ -74,25 +76,29 @@ fetch("https://minecraft-api.vercel.app/api/items")
   <!-- <button @click="next" :disabled="end >= posts.length">Next</button> -->
   <!-- <button @click="back" :disabled="start <= 0">Back</button> -->
 
-  <PaginacionPost
-    :start="start"
-    :end="end"
-    :disableNext="end >= posts.length"
-    :disableBack="start <= 0"
-    @next="next"
-    @back="back"
-  />
-  <h2>Favorite Item {{ favoriteTitle }}</h2>
-  <p>Content: {{ favoriteText }}</p>
+  <Loading v-if="loadingPage"/>
 
-  <BlogPost
-    v-for="post in posts.slice(start, end)"
-    :key="post.id"
-    :id="post.id"
-    :title="post.name"
-    :text="post.description"
-    :changeFavorite="changeFavorite"
-  />
+  <div class="container" v-else>
+    <PaginacionPost
+      :start="start"
+      :end="end"
+      :disableNext="end >= posts.length"
+      :disableBack="start <= 0"
+      @next="next"
+      @back="back"
+    />
+    <h2>Favorite Item {{ favoriteTitle }}</h2>
+    <p>Content: {{ favoriteText }}</p>
+
+    <BlogPost
+      v-for="post in posts.slice(start, end)"
+      :key="post.id"
+      :id="post.id"
+      :title="post.name"
+      :text="post.description"
+      :changeFavorite="changeFavorite"
+    />
+  </div>
 
   <!-- <h1>Welcome to the zoo</h1>
   <h4>bros name: {{ animalName }}</h4>
