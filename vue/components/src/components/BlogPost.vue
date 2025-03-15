@@ -6,8 +6,11 @@
         text: {
             content: String,
             default: '???'
-        }
+        },
+        changeFavorite: Function
     })
+
+    const emit = defineEmits('changeFavorite')
 </script>
 
 <template>
@@ -16,8 +19,7 @@
             <!-- <h5 class="card-title" :class="`text-${titleColor}`">{{ title }} no. {{ id }}</h5> -->
              <h5 class="card-title">{{ title }} {{ id }}</h5>
             <p>{{ text }}</p>
-            <button @click="$emit('myfavorite')">Title</button>
-            <button @click="$emit('content')">Content</button>
+            <button @click="changeFavorite(title, text)">Favoriteeee</button>
         </div>
     </div>
 </template>
