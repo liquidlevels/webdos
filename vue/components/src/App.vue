@@ -3,7 +3,7 @@ import AnimalsPost from './components/AnimalsPost.vue';
 import BlogPost from './components/BlogPost.vue';
 import ConterButton from './components/ConterButton.vue';
 
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import MinecraftAPI from './components/MinecraftAPI.vue';
 import PaginacionPost from './components/PaginacionPost.vue';
 import Loading from './components/Loading.vue';
@@ -49,7 +49,7 @@ const postPerPage = 5
 const start = ref(0)
 const end = ref(postPerPage)
 const totalPosts = computed(() => posts.length)
-const loadingPage = ref(true)
+const loadingPage = ref(false)
 
 const next = () => {
   start.value = start.value + postPerPage
@@ -61,24 +61,35 @@ const back = () => {
   end.value = end.value - postPerPage
 }
 
-fetch("https://minecraft-api.vercel.app/api/items")
-.then((response) => response.json())
-.then((data) => {
-  posts.value = data
+// fetch("https://minecraft-api.vercel.app/api/items")
+// .then((response) => response.json())
+// .then((data) => {
+//   posts.value = data
+// })
+// .finally(() => {
+//   setTimeout(() => {
+//     loadingPage.value = false
+//   }, 2000)
+// })
+// .catch((err) => console.error(err)); 
+
+onMounted(async() => {
+  loadingPage.value = true
+  try {
+    const response = await fetch("https://minecraft-api.vercel.app/api/items")
+    posts.value = await response.json()
+  } catch (error) {
+    console.error(error)
+  } finally {
+    setTimeout(() => {
+      loadingPage.value = false
+    }, 2000)
+  }
 })
-.finally(() => {
-  setTimeout(() => {
-    loadingPage.value = false
-  }, 2000)
-})
-.catch((err) => console.error(err)); 
 
 </script>
 
 <template>
-
-  <!-- <button @click="next" :disabled="end >= posts.length">Next</button> -->
-  <!-- <button @click="back" :disabled="start <= 0">Back</button> -->
 
   <Loading v-if="loadingPage"/>
 
@@ -104,19 +115,6 @@ fetch("https://minecraft-api.vercel.app/api/items")
     />
   </div>
 
-  <!-- <h1>Welcome to the zoo</h1>
-  <h4>bros name: {{ animalName }}</h4>
-
-  <AnimalsPost
-    v-for="animal in animals"
-    :key="animal.name"
-    :name="animal.name"
-    :image="animal.image"
-    :description="animal.description"
-    :useName="useAnimalName"
-  /> -->
-
-  <!-- <MinecraftAPI/> -->
 </template>
 
 <style scoped>
