@@ -1,13 +1,14 @@
-<script setup>
+<script setup lang="ts">
   import axios from 'axios'
   import {ref} from 'vue'
+  import type {MinecraftAPI} from '../interfaces/minecraftApi'
 
   const items = ref([])
   const getData = async () => {
     try {
       const data = await axios.get('https://minecraft-api.vercel.app/api/items')
-      console.log(data)
-      items.value = data.data
+      const minecraftApi:MinecraftAPI = data.data
+      console.log(minecraftApi)
     } catch (error) {
       console.error(error)
     }
@@ -21,6 +22,6 @@
   <!-- {{ items }} -->
 
   <ul>
-    <li v-for="item in items">{{ item.name }}</li>
+    <li v-for="item in items">{{ item }}</li>
   </ul>
 </template>
