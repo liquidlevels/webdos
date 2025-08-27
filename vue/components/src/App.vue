@@ -73,7 +73,21 @@ const back = () => {
 // })
 // .catch((err) => console.error(err)); 
 
-onMounted(async() => {
+// onMounted(async() => {
+//   loadingPage.value = true
+//   try {
+//     const response = await fetch("https://minecraft-api.vercel.app/api/items")
+//     posts.value = await response.json()
+//   } catch (error) {
+//     console.error(error)
+//   } finally {
+//     setTimeout(() => {
+//       loadingPage.value = false
+//     }, 2000)
+//   }
+// })
+
+const fetchData = async() => {
   loadingPage.value = true
   try {
     const response = await fetch("https://minecraft-api.vercel.app/api/items")
@@ -83,9 +97,11 @@ onMounted(async() => {
   } finally {
     setTimeout(() => {
       loadingPage.value = false
-    }, 2000)
+    }, 2000);
   }
-})
+}
+
+fetchData()
 
 </script>
 

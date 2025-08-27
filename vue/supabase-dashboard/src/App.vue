@@ -1,5 +1,7 @@
 <template>
   <div>
+    <div>left</div>
+    <div>mid</div>
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link v-if="!user" to="/login">Login</router-link> |

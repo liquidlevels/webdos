@@ -1,14 +1,14 @@
 <script setup lang="ts">
   import axios from 'axios'
   import {ref} from 'vue'
-  import type {MinecraftAPI} from '../interfaces/minecraftApi'
+  import type {MinecraftAPI, Datum} from '../interfaces/minecraftApi'
 
-  const items = ref([])
+  const items = ref<Datum[]>([])
   const getData = async () => {
     try {
-      const data = await axios.get('https://minecraft-api.vercel.app/api/items')
-      const minecraftApi:MinecraftAPI = data.data
-      console.log(minecraftApi)
+      const response = await axios.get('https://minecraft-api.vercel.app/api/items')
+      console.log(response.data)
+      items.value = response.data
     } catch (error) {
       console.error(error)
     }
@@ -18,10 +18,9 @@
 </script>
 
 <template>
-  <h1>welcome to the minecraft shop</h1>
-  <!-- {{ items }} -->
+  <h1>welcome to the minecraft shop</h1><br>
 
   <ul>
-    <li v-for="item in items">{{ item }}</li>
+    <li v-for="item in items">{{ item.name }}</li>
   </ul>
 </template>
